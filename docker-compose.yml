@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  tailscale:
+    build: .
+    container_name: tailscale-vpn
+    restart: unless-stopped
+    # Habilitar si se necesita acceso al dispositivo de red del host (opcional, userspace lo maneja diferente)
+    # cap_add:
+    #   - NET_ADMIN
+    #   - NET_RAW
+    environment:
+      - TAILSCALE_AUTHKEY=${TAILSCALE_AUTHKEY} # Define esto en un archivo .env o directamente aquí
+      - TAILSCALE_HOSTNAME=railway-node
+    volumes:
+      # Persistencia de estado: Importante para mantener la misma IP y credenciales entre reinicios
+      - tailscale_state:/var/lib/tailscale
+    ports:
+      - "1055:1055" # Puerto del servidor SOCKS5
+
+volumes:
+  tailscale_state:
