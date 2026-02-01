@@ -3,7 +3,8 @@ FROM alpine:3.19
 
 # Definimos una versión ESPECÍFICA para evitar roturas inesperadas en el futuro.
 # Puedes consultar la última en pkgs.tailscale.com
-ENV TAILSCALE_VERSION="1.60.0" 
+# Usamos "latest" para obtener siempre la última versión estable al construir
+ENV TAILSCALE_VERSION="latest" 
 ENV TAILSCALE_HOSTNAME="railway-custom-node"
 
 WORKDIR /app
