@@ -58,7 +58,23 @@ He añadido un archivo `docker-compose.yml` para facilitar el despliegue.
 | :--- | :--- | :--- |
 | `TAILSCALE_AUTHKEY` | **Requerido.** Tu clave de autenticación de Tailscale. | (Vacio) |
 | `TAILSCALE_HOSTNAME` | Nombre del dispositivo en la red Tailscale. | `railway-custom-node` |
-| `TAILSCALE_ADDITIONAL_ARGS` | Argumentos extra para el comando `tailscale up`. | (Vacio) |
+| `TAILSCALE_VERSION` | Versión de Tailscale a instalar. Usa `latest` para la última estable. | `latest` |
+| `TAILSCALE_ADDITIONAL_ARGS` | Argumentos extra para el comando `tailscale up`. **No incluyas `--tun` aquí.** | (Vacio) |
+
+## 🚑 Solución de Problemas Comunes
+
+### 1. "No tengo internet al conectar"
+
+Si Tailscale conecta pero no puedes navegar:
+
+1. Ve al [Admin Panel de Tailscale](https://login.tailscale.com/admin/dns).
+2. En **DNS**, agrega un "Global Nameserver" (ej. `8.8.8.8`).
+3. Activa la opción **"Override local DNS"**.
+4. Asegúrate que en la sección **Machines**, tu dispositivo de Railway tenga el "Exit Node" aprobado (Edit route settings > Use as exit node).
+
+### 2. Reinicios constantes o Fallos de conexión
+
+Revisa los logs. Si ves advertencias sobre `--tun`, limpia tu variable `TAILSCALE_ADDITIONAL_ARGS`. Si el contenedor se detiene solo, asegúrate de estar usando la última versión de este repo que incluye mejoras de estabilidad (`sleep infinity`).
 
 ## 💾 Persistencia
 
