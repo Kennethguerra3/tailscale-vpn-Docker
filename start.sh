@@ -22,6 +22,14 @@ sleep 5
 # 3. Autenticarse y anunciar el nodo de salida
 # El 'until' reintenta si falla la primera vez (común en arranques de red lentos)
 echo "🔄 Intentando conectar a la red Tailscale..."
+echo "📋 Argumentos adicionales: '${TAILSCALE_ADDITIONAL_ARGS}'"
+
+# Verificación preventiva
+if echo "${TAILSCALE_ADDITIONAL_ARGS}" | grep -q "\-tun"; then
+    echo "⚠️ ERROR DETECTADO: Has incluido '--tun' en TAILSCALE_ADDITIONAL_ARGS."
+    echo "   Por favor elimina '--tun' de tus variables de entorno. Este flag solo es para 'tailscaled' (el demonio), no para 'tailscale up'."
+fi
+
 until ./tailscale up \
   --authkey=${TAILSCALE_AUTHKEY} \
   --hostname=${TAILSCALE_HOSTNAME} \
