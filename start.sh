@@ -42,6 +42,7 @@ done
 
 echo "✅ Conexión establecida. Nodo de salida activo."
 
-# 4. Esperar al proceso del demonio
-wait $PID
+# 4. Mantener el contenedor vivo indefinidamente
+# Usamos sleep infinity para evitar que el contenedor se detenga si tailscaled se reinicia o comporta raro.
+sleep infinity
 
